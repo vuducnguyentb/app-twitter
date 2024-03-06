@@ -4,6 +4,8 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -43,4 +45,28 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    #1 người dùng có nhiều follow
+    public function followings(): BelongsToMany
+    {
+        return $this->belongsToMany(User::class, 'followers', 'user_id', 'following_id');
+    }
+
+    #1 người dùng có nhiều người follow
+    public function followers(): BelongsToMany
+    {
+        return $this->belongsToMany(User::class,'followers','following_id','user_id');
+    }
+
+    public function followingTweets(): HasManyThrough
+    {
+        return $this->hasManyThrough(
+            Tweet::class,
+            Follower::class,
+            'user_id',
+            'user_id',
+            'id',
+            'following_id'
+        );
+    }
 }

@@ -1,0 +1,16 @@
+<?php
+
+namespace App\Http\Controllers\Api;
+
+use App\Http\Controllers\Controller;
+use App\Http\Resources\TweetCollection;
+use Illuminate\Http\Request;
+
+class TimelineController extends Controller
+{
+    public function index(Request $request): TweetCollection
+    {
+        $tweets = $request->user()->followingTweets()->paginate(5);
+        return new TweetCollection($tweets);
+    }
+}

@@ -19,10 +19,12 @@ class HomeController extends Controller
     /**
      * Show the application dashboard.
      *
+     * @param Request $request
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function index()
+    public function index(Request $request)
     {
+        dd($request->user()->followings);
         return view('home');
     }
 }
