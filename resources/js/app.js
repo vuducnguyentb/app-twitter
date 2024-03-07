@@ -16,7 +16,13 @@ import { createApp } from 'vue';
 const app = createApp({});
 
 import ExampleComponent from './components/ExampleComponent.vue';
+import AppTimeline from './components/timeline/AppTimeline.vue';
+import AppTweet from "@/components/tweets/AppTweet.vue";
+import AppTweetUsername from "@/components/tweets/AppTweetUsername.vue";
 app.component('example-component', ExampleComponent);
+app.component('app-timeline', AppTimeline);
+app.component('app-tweet', AppTweet);
+app.component('app-tweet-username', AppTweetUsername);
 
 /**
  * The following block of code may be used to automatically register your
