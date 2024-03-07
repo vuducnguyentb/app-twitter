@@ -5,20 +5,20 @@
  */
 
 import './bootstrap';
-import { createApp } from 'vue';
+import {createApp} from 'vue';
 
 /**
  * Next, we will create a fresh Vue application instance. You may then begin
  * registering components with the application instance so they are ready
  * to use in your application's views. An example is included for you.
  */
-
 const app = createApp({});
 
 import ExampleComponent from './components/ExampleComponent.vue';
 import AppTimeline from './components/timeline/AppTimeline.vue';
 import AppTweet from "@/components/tweets/AppTweet.vue";
 import AppTweetUsername from "@/components/tweets/AppTweetUsername.vue";
+
 app.component('example-component', ExampleComponent);
 app.component('app-timeline', AppTimeline);
 app.component('app-tweet', AppTweet);
@@ -32,9 +32,20 @@ app.component('app-tweet-username', AppTweetUsername);
  * Eg. ./components/ExampleComponent.vue -> <example-component></example-component>
  */
 
-// Object.entries(import.meta.glob('./**/*.vue', { eager: true })).forEach(([path, definition]) => {
-//     app.component(path.split('/').pop().replace(/\.\w+$/, ''), definition.default);
-// });
+import Vuex from 'vuex';
+import timeline from "@/store/timeline.js";
+
+// định nghĩa store
+const store = new Vuex.Store({
+    //các module sẽ viết trong đây
+    modules: {
+        timeline
+    }
+})
+
+Object.entries(import.meta.glob('./**/*.vue', {eager: true})).forEach(([path, definition]) => {
+    app.component(path.split('/').pop().replace(/\.\w+$/, ''), definition.default);
+});
 
 /**
  * Finally, we will attach the application instance to a HTML element with
@@ -42,4 +53,4 @@ app.component('app-tweet-username', AppTweetUsername);
  * scaffolding. Otherwise, you will need to add an element yourself.
  */
 
-app.mount('#app');
+app.use(store).mount('#app')

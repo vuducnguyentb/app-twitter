@@ -6,20 +6,22 @@
     />
 </template>
 <script>
-    export default {
-        data (){
-            return {
-                tweets:[]
-            }
-        },
-        methods:{
-            async getTweets(){
-                let response = await axios.get('/api/timeline')
-                this.tweets = response.data.data
-            }
-        },
-        mounted() {
-            this.getTweets()
-        }
+import {mapGetters, mapActions} from "vuex";
+
+export default {
+
+    computed: {
+        ...mapGetters({
+            tweets: 'timeline/tweets'
+        })
+    },
+    methods:{
+        ...mapActions({
+            getTweets:'timeline/getTweets'
+        })
+    },
+    mounted() {
+        this.getTweets()
     }
+}
 </script>

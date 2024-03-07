@@ -15,3 +15,7 @@ Sau đó chạy:
 
 app/Http/Kernel.php
 `Mở comment middleware sanctum ra`
+
+Cài vuex
+`npm install vuex`
+
