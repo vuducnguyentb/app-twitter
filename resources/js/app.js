@@ -24,6 +24,10 @@ app.component('app-timeline', AppTimeline);
 app.component('app-tweet', AppTweet);
 app.component('app-tweet-username', AppTweetUsername);
 
+Object.entries(import.meta.glob('./**/*.vue', {eager: true})).forEach(([path, definition]) => {
+    app.component(path.split('/').pop().replace(/\.\w+$/, ''), definition.default);
+});
+
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue
@@ -44,9 +48,7 @@ const store = new Vuex.Store({
     }
 })
 
-Object.entries(import.meta.glob('./**/*.vue', {eager: true})).forEach(([path, definition]) => {
-    app.component(path.split('/').pop().replace(/\.\w+$/, ''), definition.default);
-});
+app.config.globalProperties.$user = User
 
 /**
  * Finally, we will attach the application instance to a HTML element with

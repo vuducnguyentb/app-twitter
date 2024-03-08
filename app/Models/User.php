@@ -48,7 +48,7 @@ class User extends Authenticatable
 
     public function avatar():string
     {
-        return 'https://gravatar.com/avatar/'.md5($this->email).'?d=mp';
+        return "https://gravatar.com/avatar/'.md5($this->email).'?d=mp";
     }
 
     #1 người dùng có nhiều follow

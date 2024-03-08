@@ -1,4 +1,7 @@
 <template>
+    <div class="border-b-8 border-gray-800 p-4 w-full">
+        <app-tweet-compose />
+    </div>
     <app-tweet
     v-for="tweet in tweets"
     :key="tweet.id"
@@ -15,8 +18,10 @@
 </template>
 <script>
 import {mapGetters, mapActions} from "vuex";
+import AppTweetCompose from "@/components/AppTweetCompose.vue";
 
 export default {
+    components: {AppTweetCompose},
     data(){
         return{
             page:1,
