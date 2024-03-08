@@ -19,3 +19,5 @@ app/Http/Kernel.php
 Cài vuex
 `npm install vuex`
 
+Cài vue-observe-visibility để phát hiện khi 1 phần tử trở nên hiện thị hoặc ẩn đi tren trang web
+`npm install --save vue-observe-visibility`

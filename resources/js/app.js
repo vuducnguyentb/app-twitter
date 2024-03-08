@@ -34,6 +34,7 @@ app.component('app-tweet-username', AppTweetUsername);
 
 import Vuex from 'vuex';
 import timeline from "@/store/timeline.js";
+import {ObserveVisibility} from "vue-observe-visibility";
 
 // định nghĩa store
 const store = new Vuex.Store({
@@ -53,4 +54,13 @@ Object.entries(import.meta.glob('./**/*.vue', {eager: true})).forEach(([path, de
  * scaffolding. Otherwise, you will need to add an element yourself.
  */
 
-app.use(store).mount('#app')
+app.use(store)
+    .directive('observe-visibility', {
+        beforeMount: (el, binding, vnode) => {
+            vnode.context = binding.instance;
+            ObserveVisibility.bind(el, binding, vnode);
+        },
+        update: ObserveVisibility.update,
+        unmounted: ObserveVisibility.unbind,
+    })
+    .mount('#app')
