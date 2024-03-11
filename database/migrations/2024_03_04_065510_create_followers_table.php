@@ -13,8 +13,11 @@ return new class extends Migration
     {
         Schema::create('followers', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id')->index();
-            $table->unsignedBigInteger('following_id')->index();
+            $table->unsignedBigInteger('user_id')->index()
+            ->comment('id người dùng');
+            $table->unsignedBigInteger('following_id')->index()
+            ->comment('id của thằng theo dõi ở bảng users')
+            ;
             $table->timestamps();
             $table->foreign('user_id')
                 ->references('id')

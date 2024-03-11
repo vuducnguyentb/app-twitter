@@ -5,6 +5,7 @@ namespace App\Models;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -46,7 +47,7 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
-    public function avatar():string
+    public function avatar(): string
     {
         return "https://gravatar.com/avatar/'.md5($this->email).'?d=mp";
     }
@@ -57,21 +58,33 @@ class User extends Authenticatable
         return $this->belongsToMany(User::class, 'followers', 'user_id', 'following_id');
     }
 
-    #1 người dùng có nhiều người follow
+    #lấy tất cả người dùng mà người dùng hiện tại đang theo dõi
     public function followers(): BelongsToMany
     {
-        return $this->belongsToMany(User::class,'followers','following_id','user_id');
+        return $this->belongsToMany(
+            User::class,
+            'followers', // đây là bảng trung gian(pivot table) sẽ được sử dụng
+            'following_id', //tên cuả cột khóa ngoại trong bảng trung gian lk vs model User
+            'user_id' //khóa ngoại trong bảng trung gian lk với model user
+        );
     }
 
+    //lấy ra những tweet của những user follow user
     public function followingTweets(): HasManyThrough
     {
         return $this->hasManyThrough(
-            Tweet::class,
-            Follower::class,
-            'user_id',
-            'user_id',
-            'id',
-            'following_id'
+            Tweet::class, //model cuối cùng mà ta muốn thu thập dữ liệu
+            Follower::class, //moder trung gian
+            'user_id', //khóa ngoại bảng trung gian
+            'user_id', //khoảng ngoại của bảng muốn gọi tới
+            'id', // trường mà ta muốn liên kết ở bảng đang sử dụng
+            'following_id' //trường mà cta liên kết ở bảng trung gian
         );
+    }
+
+    #nhiều tweets(bài đăng)
+    public function tweets(): HasMany
+    {
+        return $this->hasMany(Tweet::class);
     }
 }
