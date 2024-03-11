@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\Tweets;
 
 use App\Http\Controllers\Controller;
+use App\Utilities\TweetType;
 use Illuminate\Http\Request;
 
 class TweetController extends Controller
@@ -14,8 +15,11 @@ class TweetController extends Controller
 
     public function store(Request $request)
     {
-        $request->user()
+       return $request->user()
             ->tweets()
-            ->create($request->only('body'));
+            ->create(array_merge(
+                $request->only('body'),
+                ['type' => TweetType::TWEET]
+            ));
     }
 }
