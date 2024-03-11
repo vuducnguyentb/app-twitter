@@ -21,3 +21,7 @@ Cài vuex
 
 Cài vue-observe-visibility để phát hiện khi 1 phần tử trở nên hiện thị hoặc ẩn đi tren trang web
 `npm install --save vue-observe-visibility`
+
+
+Cài telescope
+`composer require laravel/telescope`
