@@ -20,7 +20,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/timeline', [TimelineController::class, 'index'])
-    ->name('timeline');
+//Route::get('/timeline', [TimelineController::class, 'index'])
+//    ->name('timeline');
 
 Route::post('/tweets',[TweetController::class,'store']);
