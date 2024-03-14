@@ -16,15 +16,16 @@
         class="border border-gray-700 rounded-lg mt-4"
         :tweet="tweet.original_tweet"
         />
-
+        <app-tweet-action-group />
     </div>
 </template>
 
 <script>
 import AppTweet from "@/components/tweets/AppTweet.vue";
+import AppTweetActionGroup from "@/components/actions/AppTweetActionGroup.vue";
 
 export default {
-    components: {AppTweet},
+    components: {AppTweetActionGroup, AppTweet},
     props: {
         tweet: {
             required: true,
